@@ -1,0 +1,42 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #060606;
+    font-family: "Montserrat", sans-serif !important;
+    position: relative;
+}
+.variable-proximity{
+    font-family: "Montserrat", sans-serif !important;
+}
+a {
+    text-decoration: none;
+}
+button{
+    font:inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    letter-spacing: inherit;
+    outline: unset;
+    border: unset;
+    background: unset;
+}
+body::-webkit-scrollbar
+{
+    width: 5px;
+}
+body::-webkit-scrollbar-track
+{
+    background: var(--theme_current);
+}
+body::-webkit-scrollbar-thumb
+{
+    background: linear-gradient( to top, #45F882,#FFBE18);
+    border-radius: 5%;
+}
+.header{
+    z-index: 100000;
+}
