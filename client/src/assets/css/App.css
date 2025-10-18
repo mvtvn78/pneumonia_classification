@@ -53,3 +53,20 @@
     padding: 15px;
     border-radius: 20px;
 }
+.instruc_container{
+    height: 512px;
+}
+.instruc_container .scroll-stack-scroller{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.instruc_container .scroll-stack-scroller::-webkit-scrollbar {
+     display: none;
+}
+/* .scroll-stack-scroller .scroll-stack-inner{
+    padding: 0;
+}
+.scroll-stack-inner .scroll-stack-card{
+    margin: 0;
+    padding: 0;
+} */

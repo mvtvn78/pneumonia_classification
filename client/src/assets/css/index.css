@@ -38,5 +38,5 @@ body::-webkit-scrollbar-thumb
     border-radius: 5%;
 }
 .header{
-    z-index: 100000;
+    z-index: 999;
 }
