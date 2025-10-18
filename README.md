@@ -7,7 +7,7 @@
 
 ## Backenđ
 
-Flask,opencv2
+Flask
 
 # Chạy Client
 
