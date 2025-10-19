@@ -19,6 +19,7 @@ def uploadHanler():
         return -2
     if f and allowed_file(f.filename):
         ext = f.filename.split(".")[-1]
-        filename = "store\\" + secure_filename(f"{gn.generateUniqueTimestamp()}.{ext}")
-        f.save(filename)
-        return filename
+        fileName = secure_filename(f"{gn.generateUniqueTimestamp()}.{ext}")
+        path = "store\\" + fileName
+        f.save(path)
+        return (path,fileName)

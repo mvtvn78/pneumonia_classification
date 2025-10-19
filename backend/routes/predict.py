@@ -1,65 +1,35 @@
 from flask import Blueprint, jsonify, request
 from handler.upload import uploadHanler
-from util.getFace import getFaceIMG
-import torch
-import PIL.Image as Image
-import torchvision.transforms as transforms
-from model.meso4 import Meso4
-from model.resnet50 import resnet50
+import tensorflow as tf
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
+import numpy as np
 
-PATHFILEMODELMESO = "model\\best_meso4.pth"
-PATHFILEMODELRESNET = "model\\best_resnet50_T5.pth"
+PATH_FILE_EFFICIENTNETB0 = "model\\EfficientNetB0.keras"
+PATH_FILE_DENSENET = "model\\finet_densenet.keras"
 predict_bp = Blueprint("upload", __name__)
 
-# model = Meso4()
-# model.load_state_dict(torch.load(PATHFILEMODELMESO))
-# model.eval()
-# img_transformer = transforms.Compose(
-#     [
-#         transforms.Resize((256, 256)),
-#         transforms.ToTensor(),
-#         transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5]),
-#     ]
-# )
-
-# Resnet50
-model = resnet50
-model.load_state_dict(torch.load(PATHFILEMODELRESNET))
-model.eval()
-img_transformer = transform = transforms.Compose(
-    [
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5]),
-    ]
-)
-
-
+modelEff = load_model(PATH_FILE_EFFICIENTNETB0)
+modelDen = load_model(PATH_FILE_DENSENET)
 @predict_bp.route("/predict", methods=["POST"])
 def predictHanler():
-    file = uploadHanler()
+    (path,file) = uploadHanler()
     if file == -1 or file == -2:
         return jsonify({"msg": "", "status": file})
-    faceFile = getFaceIMG(file)
-    org, detectFaceList = faceFile
-    detectList = []
-    for item in detectFaceList:
-        path = f"store\\{item}"
-        image = Image.open(path)
-        image = img_transformer(image).float()
-        image = image.unsqueeze(0)
-        with torch.no_grad():
-            output = model(image)
-            output = torch.softmax(output, 1)
-            result = output.reshape(-1).tolist()
-            detectList.append(result)
-
+    img = image.load_img(path,target_size=(224, 224))
+    img_array = image.img_to_array(img)
+    img_array = np.expand_dims(img_array, axis=0)
+    img_array = img_array / 255.0
+    pred = modelDen.predict(img_array)
+    class_idx = np.argmax(pred, axis=1)[0]
+    class_names = ['Bình thường', 'Viêm phổi vi khuẩn', 'Viêm phổi virus']
+    class_idx = int(class_idx)
+    print(class_names[class_idx])
     return jsonify(
         {
             "msg": "",
             "status": 0,
-            "org": org,
-            "detectFace": detectFaceList,
-            "detectList": detectList,
+            "org": file,
+            "pred": class_idx
         }
     )
