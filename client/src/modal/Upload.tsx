@@ -7,42 +7,35 @@ interface UploadProps {
     show?: boolean,
     setVisible : Function,
     setImage : Function,
-    setDetectList : Function
+    setPred : Function,
+    setLoading: Function
 }
 const  Upload: FC<UploadProps> = ({
     show = true,
     setVisible,
     setImage,
-    setDetectList
+    setPred,
+    setLoading
 })  =>{
     const callAPI = async(file:File) =>{
+        setLoading(true)
         setVisible(false);
-        setDetectList([]);
+        setPred([]);
         const formdata = new FormData();
         formdata.append("file",file);
         const data =  await predictAPI(formdata);
         if(data?.status == 0)
         {
+            setLoading(false)
             setImage(DOMAIN_PUBLIC+"/"+data?.org);
-            const detectFaces:any = data?.detectFace;
-            const detectList: any = data?.detectList;
-            if(detectFaces.length > 0)
-            {
-                let idx = 0 ;
-                const preData = detectFaces.map((val:string)=> {
-                    const fake = (detectList[idx][0]*100).toFixed(2);
-                    const real = (detectList[idx][1]*100).toFixed(2);
-                    idx+=1;
-                    return {"image":`${DOMAIN_PUBLIC}/${val}`,"Fake": fake,'Real':real};
-                });
-                setDetectList(preData)
-            }
+            setPred(data)
             return;
         }
         Swal.fire({
             title: "Tải file thất bại",
             icon: "warning"
           });
+        setLoading(false)
     }
     const intPutFile:any = useRef(null);
     const [textDetectDrag, setTextDetectDrag] = useState('Kéo và thả tệp vào đây');

@@ -10,12 +10,35 @@ import SpotlightCard from "../assets/components/SpotlightCard";
 import Reveal from "../assets/components/Reveal";
 import Upload from "../modal/Upload";
 import LightRays from "../assets/components/LightRays";
+import { Atom } from "react-loading-indicators";
+import { CLASS_PRED } from "../utils/constant";
+type Prediction = {
+  msg: string;
+  status: number;
+  org: string;
+  pred: number;
+};
 const App: React.FC<{}> = ({ }) => {
   const containerRef = useRef(null);
+  const [loading,setLoading] = useState(false);
   const [modalUpload,setModalUpload] = useState(false);
   const [image,setImage] = useState("https://mediasvc.eurekalert.org/Api/v1/Multimedia/48133881-a89b-475d-a7e1-dd30b0733423/Rendition/low-res/Content/Public")
-  const [detectList,setDetectList] = useState([])
+  const [pred,setPred] = useState<Prediction| null>(null)
   return (
+    <>
+    {loading &&  <div style={{
+    position:'fixed',
+    width:'100%',
+    height:'100%',
+    backgroundColor:'rgba(255, 255, 255, 0.2)',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    zIndex:'10000000'
+  }}>
+    <Atom color={["#ff0022", "#a1ff00", "#00ffdd", "#5e00ff"]} size="large"  />
+  </div>}
+    
     <div style={{ width: '100%', height: '500px', position: 'relative' }}>
     <LightRays
     raysOrigin="top-center"
@@ -29,6 +52,7 @@ const App: React.FC<{}> = ({ }) => {
     distortion={0.05}
     className="custom-rays"
   />
+  
     <div style={{ position: 'absolute', top: 0,left: 0 ,right: 0, bottom:0}}>
       <div className="header" style={{position:'fixed',width:'100%',background:'rgba(0, 0, 0, 0.3)'}}>
         <div className="bar_wrap" style={{padding :'20px'}}>
@@ -101,32 +125,10 @@ const App: React.FC<{}> = ({ }) => {
                     width:'650px',
                     height:'400px'
                   }} src={image} alt="" id="image-output"/>
-                  {detectList.length > 0 &&  <div className="predict">
+                  {pred  &&  <div className="predict">
                     <p style={{margin:'10px',fontSize:'20px',fontWeight:'bolder'}}>Kết quả dự đoán</p>
-                    <div style={{display:'flex',justifyContent:'center',gap:'20px'}}>
-                      <div style={{width:'20px',height:'20px',backgroundColor:'#0a8e28'}}></div> Thật
-                      <div style={{width:'20px',height:'20px',backgroundColor:'#FA0204'}}></div> Giả
-                    </div>
-                    <div className="detectList">
-                      {detectList.map((val :any)=>  <div style={{display:'flex'}}>
-                        <div className="col-lg-3">
-                          <img src={val.image} style={{width: '80px',height:'80px',objectFit:'contain', margin: '10px'}} />
-                          </div>
-                          <div  style={{margin: 'auto',width:'100%'}}>
-                            <div >
-                              <div style={{margin:'10px'}}>
-                                <div style={{textAlign:'right'}}>{val.Real}%</div>
-                                <span  style={{width: '100%',backgroundColor : '#0a8e28',display:'inline-block',height:'10px',borderRadius:'5px'}} />
-                              </div>
-                              <div style={{margin:'10px'}}>
-                                <div style={{textAlign:'right'}}>{val.Fake}%</div>
-                                <span  style={{width: '100%',backgroundColor : '#FA0204',display:'inline-block',height:'10px',borderRadius:'5px'}} />
-                              </div>
-                             
-                            </div>
-                            </div>
-                        </div>)}
-                     </div>
+                    {pred?.pred ==0  &&  <div style={{backgroundColor:'#0a8e28',textAlign:'center'}}>Phổi bạn được dự đoán bình thường</div>   }
+                    {pred?.pred >0 && pred?.pred <3 && <div style={{backgroundColor:'#FA0204',textAlign:'center'}}>Phổi bạn được dự đoán viêm phổi và có thể tác nhân là {CLASS_PRED[pred?.pred]}</div> }          
                   </div>}
                 </div>
               </div>
@@ -192,10 +194,11 @@ const App: React.FC<{}> = ({ }) => {
        
      
       </div>
-      <Upload show={modalUpload} setVisible={setModalUpload} setImage={setImage}  setDetectList={setDetectList} />
+      <Upload show={modalUpload} setVisible={setModalUpload} setImage={setImage}   setPred={setPred} setLoading={setLoading} />
       {modalUpload && <button title="thoát" className="exit_modal" onClick={()=>{setModalUpload(false)}}>X</button>}
       </div>
     </div>
+    </>
   )
 };
 export default App
