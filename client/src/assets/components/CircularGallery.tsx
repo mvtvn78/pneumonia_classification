@@ -507,28 +507,28 @@ class App {
   ) {
     const defaultItems = [
       {
-        image: `re1.png`,
-        text: "Real",
+        image: `1.png`,
+        text: "Ảnh thử nghiệm 1",
       },
       {
-        image: `fa1.png`,
-        text: "Fake",
+        image: `2.png`,
+       text: "Ảnh thử nghiệm 2",
       },
       {
-        image: `fa2.png`,
-        text: "Fake",
+        image: `3.png`,
+         text: "Ảnh thử nghiệm 3",
       },
       {
-        image: `re2.png`,
-        text: "Real",
+        image: `4.png`,
+        text: "Ảnh thử nghiệm 4",
       },
       {
-        image: `re33.png`,
-        text: "Real",
+        image: `5.png`,
+        text: "Ảnh thử nghiệm 5",
       },
       {
-        image: `fa3.png`,
-        text: "Fake",
+        image: `6.png`,
+         text: "Ảnh thử nghiệm 6",
       },
     ];
     const galleryItems = items && items.length ? items : defaultItems;

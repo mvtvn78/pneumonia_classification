@@ -22,7 +22,7 @@ const App: React.FC<{}> = ({ }) => {
   const containerRef = useRef(null);
   const [loading,setLoading] = useState(false);
   const [modalUpload,setModalUpload] = useState(false);
-  const [image,setImage] = useState("https://mediasvc.eurekalert.org/Api/v1/Multimedia/48133881-a89b-475d-a7e1-dd30b0733423/Rendition/low-res/Content/Public")
+  const [image,setImage] = useState("file_1760920639.939278.png")
   const [pred,setPred] = useState<Prediction| null>(null)
   return (
     <>
@@ -122,7 +122,6 @@ const App: React.FC<{}> = ({ }) => {
                 <div>
                   <img style={{
                     objectFit:'contain',
-                    width:'650px',
                     height:'400px'
                   }} src={image} alt="" id="image-output"/>
                   {pred  &&  <div className="predict">
@@ -154,7 +153,7 @@ const App: React.FC<{}> = ({ }) => {
             <SpotlightCard className="custom-spotlight-card" spotlightColor="rgba(0, 229, 255, 0.2)">
             <div className="cl_white">
             <div style={{display:'flex',justifyContent:'center'}}>
-             <img src="https://avatars.githubusercontent.com/u/130427662?v=4"  alt="" width={200} height={200} />
+             <img src="Tvm_tn.jpg"  alt="" width={200} height={200} />
              </div>
               <h3 className="t_center p_10 t_upper">Sinh viên thực hiện</h3>
               <p className="t_center">Mai Văn Tiền</p>
@@ -163,7 +162,7 @@ const App: React.FC<{}> = ({ }) => {
           <SpotlightCard className="custom-spotlight-card" spotlightColor="rgba(0, 229, 255, 0.2)">
             <div className="cl_white">
              <div style={{display:'flex',justifyContent:'center'}}>
-              <img src="https://avatars.githubusercontent.com/u/130427662?v=4"  alt="" width={200} height={200} />
+              <img src="p1.jpg"  alt="" width={200} height={200} />
              </div>
               <h3 className="t_center p_10 t_upper">Sinh viên thực hiện</h3>
               <p className="t_center">Lê Huỳnh Cẩm Tú</p>
@@ -187,7 +186,7 @@ const App: React.FC<{}> = ({ }) => {
                 />
               </div>
           <div style={{ height: '600px', position: 'relative' }}>
-            <CircularGallery bend={3} textColor="#ffffff" borderRadius={0.05} />
+            <CircularGallery bend={1} textColor="#ffffff" borderRadius={0.05} />
           </div>
         </div>
     </Reveal>

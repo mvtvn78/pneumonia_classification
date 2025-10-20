@@ -27,7 +27,7 @@ const  Upload: FC<UploadProps> = ({
         if(data?.status == 0)
         {
             setLoading(false)
-            setImage(DOMAIN_PUBLIC+"/"+data?.org);
+            setImage(DOMAIN_PUBLIC+"/"+data?.heatmap);
             setPred(data)
             return;
         }
