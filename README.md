@@ -1,23 +1,13 @@
-# Install dependencies
+# Hướng dẫn chạy dự án
 
 ## Client
-
-`cd client\df_client`
+* Cài đặt thư viện bằng câu lệnh
+`cd web`
 `npm  install`
-
+`npm run dev`
 ## Backenđ
-
-Flask
-
-# Chạy Client
-
-`cd client\df_client`
-
-`npm  run dev `
-
-# Chạy Backend
-
+* Cài đặt thư viện bằng câu lệnh
 `python -m venv venv`
 `venv\Scripts\activate.bat`
 `pip install -r requirements.txt`
-`python backend\main.py `
+`python src\main.py `
