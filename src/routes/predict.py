@@ -5,8 +5,9 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
 from util import gradcamplus as grad
+from preprocessing import preprocess_image_detect
 PATH_FILE_EFFICIENTNETB0 = "model\\EfficientNetB0.keras"
-PATH_FILE_DENSENET = "model\\finet_densenet.keras"
+PATH_FILE_DENSENET = "model\\DenseNet121.keras"
 predict_bp = Blueprint("upload", __name__)
 
 modelEff = load_model(PATH_FILE_EFFICIENTNETB0)
@@ -17,10 +18,8 @@ def predictHanler():
     (path,file) = uploadHanler()
     if file == -1 or file == -2:
         return jsonify({"msg": "", "status": file})
-    img = image.load_img(path,target_size=(224, 224))
-    img_array = image.img_to_array(img)
-    img_array = img_array / 255.0
-    img_array = np.expand_dims(img_array, axis=0)
+    img_array,img = preprocess_image_detect(path,1)
+
     pred = modelDen.predict(img_array)
     class_idx = np.argmax(pred, axis=1)[0]
     class_names = ['Bình thường', 'Viêm phổi vi khuẩn', 'Viêm phổi virus']

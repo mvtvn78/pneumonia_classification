@@ -38,9 +38,8 @@ const App: React.FC<{}> = ({ }) => {
   }}>
     <Atom color={["#ff0022", "#a1ff00", "#00ffdd", "#5e00ff"]} size="large"  />
   </div>}
-    
     <div style={{ width: '100%', height: '500px', position: 'relative' }}>
-    <LightRays
+    {!pred && <LightRays
     raysOrigin="top-center"
     raysColor="#00ffff"
     raysSpeed={0.8}
@@ -51,7 +50,7 @@ const App: React.FC<{}> = ({ }) => {
     noiseAmount={0.1}
     distortion={0.05}
     className="custom-rays"
-  />
+  />}
   
     <div style={{ position: 'absolute', top: 0,left: 0 ,right: 0, bottom:0}}>
       <div className="header" style={{position:'fixed',width:'100%',background:'rgba(0, 0, 0, 0.3)'}}>

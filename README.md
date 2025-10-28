@@ -2,6 +2,7 @@
 * Chest X-Ray Images (Normal and Pneumonia)
 * Đường dẫn liên kết: https://www.kaggle.com/datasets/ghost5612/chest-x-ray-images-normal-and-pneumonia
 # Hướng dẫn chạy dự án
+Python version: 3.9
 
 ## Client
 `cd web`
